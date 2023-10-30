@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -10,7 +7,7 @@ public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
@@ -62,9 +59,10 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    printJobs(JobData.findByValue(searchTerm));
+                    printJobs(JobData.findByValue(searchTerm.toLowerCase()));
+                    //put toLowerCase so it would be caseInsensitive, also added them to the findByValue and findByColumnAndValue
                 } else {
-                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
+                    printJobs(JobData.findByColumnAndValue(searchField, searchTerm.toLowerCase()));
                 }
             }
         }
@@ -112,14 +110,27 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        // for loops to loop through hashmap, and then it gets the key and value and prints them.
+        for (int i = 0; i < someJobs.size(); i++) {
+          HashMap <String, String> newJobList = someJobs.get(i);
+            System.out.println("\n*****" );
+            for (Map.Entry<String, String> jobEntry : newJobList.entrySet()) {
+                System.out.println(jobEntry.getKey() + ": " + jobEntry.getValue());
+            }
+            System.out.println("*****" );
 
-        System.out.println("printJobs is not implemented yet");
+
+        }
+        // if someJobs is empty then prints there are No results
+        if(someJobs.size() == 0){
+            System.out.print("No Results");
+        }
     }
 }
