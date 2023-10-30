@@ -5,10 +5,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -56,7 +53,6 @@ public class JobData {
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
@@ -75,7 +71,7 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            if (aValue.toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
@@ -90,14 +86,39 @@ public class JobData {
      * @return      List of all jobs with at least one field containing the value
      */
     public static ArrayList<HashMap<String, String>> findByValue(String value) {
-
+        //leave load data()
         // load data, if not already loaded
         loadData();
 
         // TODO - implement this method
-        return null;
-    }
+        // Made my new ArrayList of Hashmaps called jobs
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+        // *no duplicate returns
+        //loop through until no more columns or rows
+        //loop through the hashmap. will look similar to findByColumnAndValue
+        //Call in Main
+        //for loop to loop through allJobs
+        for (HashMap<String, String> row : allJobs) {
+            // set a boolean variable containsValue to equal false
+            boolean containsValue = false;
+            //used Map.Entry to loop through the hashmap and set the key and rowValue
+            for (Map.Entry<String, String> entry : row.entrySet()) {
+                String key = entry.getKey();
+                String rowValue = entry.getValue();
+                //used if to check if my rowValue contains the value, and if it's true it breaks
+                if (rowValue.toLowerCase().contains(value.toLowerCase())) {
+                    containsValue = true;
+                    break; // Exit the inner loop if we find a match
+                }
+            }
+            // if to see if it containsValue is true and then it adds it to jobs
+            if (containsValue) {
+                jobs.add(row);
+            }
+        }
 
+        return jobs;
+    }
     /**
      * Read in data from a CSV file and store it in a list
      */
