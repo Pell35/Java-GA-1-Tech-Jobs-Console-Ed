@@ -103,7 +103,7 @@ public class JobData {
             boolean containsValue = false;
             //used Map.Entry to loop through the hashmap and set the key and rowValue
             for (Map.Entry<String, String> entry : row.entrySet()) {
-//                String key = entry.getKey();
+                String key = entry.getKey();
                 String rowValue = entry.getValue();
                 //used if to check if my rowValue contains the value, and if it's true it breaks
                 if (rowValue.toLowerCase().contains(value.toLowerCase())) {
@@ -161,5 +161,3 @@ public class JobData {
     }
 
 }
-
-// not sure why, but I'm adding a comment to see if it will let me push without merging
